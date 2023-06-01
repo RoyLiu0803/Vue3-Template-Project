@@ -102,7 +102,6 @@ npm install -D postcss-preset-env
 ```
 
 - if need copy in [vite.config.js](/vite.config.js)
-  
 
 ```
 npm install -D rollup-plugin-copy
@@ -127,10 +126,10 @@ plugins: [
   }),
 ],
 ```
-[hook參考資料1](https://rollupjs.org/plugin-development/#build-hooks)
 
-[hook參考資料2](https://zhuanlan.zhihu.com/p/129890038)
+[hook 參考資料 1](https://rollupjs.org/plugin-development/#build-hooks)
 
+[hook 參考資料 2](https://zhuanlan.zhihu.com/p/129890038)
 
 - if need env in [vite.config.js](/vite.config.js)
 
@@ -142,4 +141,74 @@ export default ({ command, mode }) => {
   const env = loadEnv(mode, process.cwd());
   ...
 };
+```
+
+# ADD ESLINT
+
+- add and init **eslint**
+
+```
+yarn add -D eslint
+
+npx eslint --init
+```
+
+> √ How would you like to use ESLint? · problems  
+> √ What type of modules does your project use? · esm  
+> √ Which framework does your project use? · vue  
+> √ Does your project use TypeScript? · **No** / Yes  
+> √ Where does your code run? · browser  
+> √ What format do you want your config file to be in? · JavaScript  
+> The config that you've selected requires the following dependencies:  
+> eslint-plugin-vue@latest  
+> √ Would you like to install them now? · No / **Yes**  
+> √ Which package manager do you want to use? · yarn
+
+- add **vue-eslint-parser**
+
+```
+yarn add -D vue-eslint-parser
+```
+
+- add **vite-plugin-eslint**
+
+```
+// 說明: 該包是用於配置vite運行的時候自動檢測eslint規範
+// 問題: 不裝這個包可以嗎? 答案是“可以的”,使用yarn dev時並不會主動檢查代碼
+
+yarn add -D vite-plugin-eslint
+```
+
+- add **eslint-parser**
+
+```
+yarn add -D @babel/core
+
+yarn add -D @babel/eslint-parser
+```
+
+- add **prettier**
+
+```
+yarn add -D prettier
+yarn add -D eslint-config-prettier // eslint兼容的插件
+yarn add -D eslint-plugin-prettier // eslint的prettier
+```
+
+set [**.prettierrc.js**](/.prettierrc.js)
+
+set [**.eslintrc.js**](/.eslintrc.js)
+
+set [**vite.config.js**](/vite.config.js)
+
+```
+import eslintPlugin from 'vite-plugin-eslint';
+
+plugins: [
+  vue(),
+  eslintPlugin({
+  include: ['src/**/*.ts', 'src/**/*.vue', 'src/*ts', 'src/*.vue'],
+  }),
+],
+
 ```
